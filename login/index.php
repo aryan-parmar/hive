@@ -11,7 +11,7 @@
 <body>
   <div class="wrapper">
     <div class="illustration">
-      <img src="../assets/image/login_illustration.svg" alt="login" />
+      <img src="../assets/image/bg.png" alt="login" />
     </div>
     <div id="login" class="login">
       <div class="login_wrapper">

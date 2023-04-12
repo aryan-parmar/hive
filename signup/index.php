@@ -13,7 +13,7 @@
 <body>
   <div class="wrapper">
     <div class="illustration">
-      <img src="../assets/image/login_illustration.svg" alt="signup" />
+      <img src="../assets/image/bg.png" alt="signup" />
     </div>
     <div id="signup" class="signup">
       <div class="signup_wrapper">

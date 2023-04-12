@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #fff;
+    background-color: #171717;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -19,7 +19,7 @@ body {
 .logo {
     font-family: "lobster";
     font-weight: normal;
-    color: rgb(102, 58, 0);
+    color: #ff9655;
     font-size: 1.8rem;
     animation: fadein 0.5s ease-in forwards;
 }
@@ -31,30 +31,32 @@ body {
 }
 
 .illustration {
-    width: 100%;
+    width: auto;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(189, 220, 255);
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    background-color: #ffd7be;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
 }
 
 .illustration img {
-    height: auto;
-    width: 80%;
+    height: 99%;
+    width: auto;
+    object-fit: contain;
 }
 
 .signup {
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: transparent;
     border-radius: 10px;
     /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); */
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #e6e6e6;
 }
 
 .signup_wrapper {
@@ -93,10 +95,12 @@ h4 {
 .form input {
     width: 100%;
     height: 100%;
-    border: 1px solid #ccc;
+    border: 1.5px solid #313131;
     border-radius: 5px;
     padding: 0 10px;
     font-size: 1rem;
+    background: #282828;
+    color: #e7e7e7;
 }
 
 .form input::-webkit-input-placeholder {
@@ -105,15 +109,17 @@ h4 {
 
 .form input[type="submit"] {
     height: 50px;
-    background-color: #000;
-    color: #fff;
+    background-color: #ffd7be;
+    color: #232323;
     cursor: pointer;
     transition: 0.3s;
     margin-top: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .form input[type="submit"]:hover {
-    background-color: #333;
+    opacity: 0.7;
 }
 
 label {
@@ -126,7 +132,7 @@ label {
     position: absolute;
     top: 50%;
     transform: translate(0%, -50%);
-    color: #535353;
+    color: #c3c3c3;
     pointer-events: none;
     transition: transform 0.2s ease-in-out;
 }
@@ -143,7 +149,7 @@ label {
 
 a {
     text-decoration: none;
-    color: #000;
+    color: #ffbfbf;
     transition: 0.3s;
     font-style: italic;
 }
