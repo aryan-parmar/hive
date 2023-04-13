@@ -1,115 +1,149 @@
-/* Styles for the header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+/* Styles for the sidenav */
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  padding-top: 1rem;
+  border-right: 1px solid #eee;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.link_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.link_list {
+  margin-bottom: 1rem;
+}
+
+.navlink {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.navlink:hover {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+
+.navlink_text {
+  margin-left: 1rem;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  nav ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  nav li {
-    margin-right: 1rem;
-  }
-  
-  nav a {
-    text-decoration: none;
-    color: #000;
-  }
-  
-  nav a:hover {
-    color: #3897f0;
-  }
-  
-  /* Styles for the profile section */
-  .profile-info {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-  }
-  
-  .profile-info img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 1rem;
-  }
-  
-  .profile-info h1 {
-    margin: 0;
-    font-size: 2rem;
-  }
-  
-  .profile-info button {
-    margin-left: auto;
-    background-color: #3897f0;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .profile-info button:hover {
-    background-color: #36c2f3;
-  }
-  
-  .stats {
-    display: flex;
-    list-style: none;
-    margin: 1rem 0 0 0;
-    padding: 0;
-  }
-  
-  .stats li {
-    margin-right: 2rem;
-    font-size: 1.2rem;
-  }
-  
-  .stats strong {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .profile-info p {
-    margin: 1rem 0;
-  }
-  
-  /* Styles for the gallery section */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .gallery img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* Styles for the footer */
-  footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #fafafa;
-    border-top: 1px solid #ddd;
-  }
-  
-  footer p {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #999;
-  }
-  
+}
+
+/* Styles for the post area */
+.post_area {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 200px;
+  padding: 1rem;
+}
+
+.post_container {
+  width: calc((100% - 5rem) / 3);
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post_title {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.post_title img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.post_title h6 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.post_title button {
+  margin-left: auto;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.post_img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.post_footer {
+  padding: 1rem;
+}
+
+.post_caption p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+}
+
+.post_interections {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.post_interections i {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.input_container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.input_container input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.input_container button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
