@@ -40,9 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO user_data (username, email, password, fullname) 
   			  VALUES('$username', '$email', '$hashpassword', '$fullname')";
     mysqli_query($db, $query);
-    $_SESSION['username'] = $username;
+    $user_check_query = "SELECT * FROM user_data WHERE username='$username' OR email='$email' LIMIT 1";
+    $result = mysqli_query($db, $user_check_query);
+    $user = mysqli_fetch_assoc($result);
+    $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['success'] = "You are now logged in";
-    header('location: /');
+    header('location: /interest');
   }
 }
 ?>

@@ -1,9 +1,48 @@
 <?php
+include("config.php");
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: /login');
 }
+$query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
+$result = mysqli_query($db, $query);
+$user = mysqli_fetch_assoc($result);
+
+$query = "SELECT * FROM user_interest WHERE fk_user_id = " . $_SESSION['user_id'];
+$user_interest = [];
+$result = mysqli_query($db, $query);
+while ($row = mysqli_fetch_assoc($result)) {
+    array_push($user_interest, $row['fk_interest_id']);
+}
+$user_array = [];
+foreach ($user_interest as $interest) {
+    $query = "SELECT ui.fk_user_id
+    FROM user_interest ui
+    WHERE 
+    ui.fk_interest_id =" . $interest
+        . " AND ui.fk_user_id <> " . $_SESSION['user_id']
+        . " AND ui.fk_user_id NOT IN (
+      SELECT f.fk_other_user_id
+      FROM follow f
+      WHERE f.fk_user_id = " . $_SESSION['user_id']
+        . ") LIMIT 10";
+    $result = mysqli_query($db, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        // printf($row);
+        array_push($user_array, $row['fk_user_id']);
+    }
+}
+$user_array = array_unique($user_array);
+$user_array = array_values($user_array);
+$users = [];
+foreach ($user_array as $user_id) {
+    $query = "SELECT * FROM user_data WHERE user_id = " . $user_id;
+    $result = mysqli_query($db, $query);
+    $user = mysqli_fetch_assoc($result);
+    array_push($users, $user);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,84 +69,107 @@ if (!isset($_SESSION['username'])) {
                                 class="navlink_text">home</span></a>
                     </li>
                     <li class="link_list">
-                        <a href="#" class="navlink"><i class="fa-solid fa-compass spin"></i><span
-                                class="navlink_text">explore</span></a>
+                        <a href="/add" class="navlink"><i class="fa-solid fa-circle-plus" style=""></i><span
+                                class="navlink_text">add</span></a>
                     </li>
                     <li class="link_list">
-                        <a href="#" class="navlink"><i class="fa-solid fa-circle-user"></i><span
+                        <a href="/profile" class="navlink"><i class="fa-solid fa-circle-user"></i><span
                                 class="navlink_text">profile</span></a>
                     </li>
                 </ul>
             </div>
         </section>
         <section class="post_area">
-            <div class="post_container">
-                <div class="post_title">
-                    <img src="./assets/image/profile.jpg" alt="profile" />
-                    <h6>aryyy</h6>
+
+            <?php
+            $query = "SELECT ud.profile_link, ud.username, ud.fullname, p.* FROM post as p, user_data as ud WHERE p.fk_user_id = " . $_SESSION['user_id'] . "AND ud.user_id = p.fk_user_id ORDER BY post_id DESC LIMIT 20";
+            $query = "SELECT p.*, u.* 
+            FROM post p 
+            INNER JOIN follow f ON p.fk_user_id = f.fk_other_user_id 
+            INNER JOIN user_data u ON p.fk_user_id = u.user_id 
+            WHERE f.fk_user_id = " . $_SESSION['user_id'] . " AND u.user_id = p.fk_user_id
+            ORDER BY post_id DESC LIMIT 20
+            ";
+
+            $result = mysqli_query($db, $query);
+            if (mysqli_num_rows($result) == 0) {
+                echo '<div class="post_container">
+                    NO POSTS </div>
+                    ';
+            } else {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    if($row['post_img'] == NULL){
+                        echo '<div class="post_container">
+                        <div class="post_title">
+                    <img src="' . $row['profile_link'] . '" alt="profile" />
+                    <h6><a href="/profile/index.php?username='.$row['username'].'">' . $row['username'] . '</a></h6>
                     <button><i class="fa-solid fa-bars"></i></button>
-                </div>
-                <div class="post_img">
-                    <img src="./assets/image/profile.jpg" alt="post" />
                 </div>
                 <div class="post_footer">
                     <div class="post_caption">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad eius
-                            dolor dicta assumenda totam. Commodi, enim fuga? Laudantium,
-                            placeat magnam nam nisi voluptate reiciendis qui modi fugit
-                            atque, aspernatur ratione!
+                            ' . $row['post_data'] . '
                         </p>
                     </div>
                     <div class="post_interections">
                         <i class="fa-regular fa-heart like"></i>
+                        <i class="fa-regular fa-comment comment"></i>
                         <div class="input_container">
                             <input type="text" placeholder="Comment..." />
-                            <button><i class="fa-solid fa-paper-plane"></i></button>
+                            <button><i class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="post_container">
-                <div class="post_title">
-                    <img src="./assets/image/dog.png" alt="profile" />
-                    <h6>aryyy</h6>
-                    <button><i class="fa-solid fa-bars"></i></button>
-                </div>
-                <div class="post_img">
-                    <img src="./assets/image/dog.png" alt="post" />
-                </div>
-                <div class="post_footer">
-                    <div class="post_caption">
+                </div>';
+                    }else{
+
+                        echo '<div class="post_container">
+                        <div class="post_title">
+                        <img src="' . $row['profile_link'] . '" alt="profile" />
+                        <h6><a href="/profile/index.php?username='.$row['username'].'">' . $row['username'] . '</a></h6>
+                        <button><i class="fa-solid fa-bars"></i></button>
+                        </div>
+                        <div class="post_img">
+                        <img src="' . $row['post_img'] . '" alt="post" />
+                        </div>
+                        <div class="post_footer">
+                        <div class="post_caption">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad eius
-                            dolor dicta assumenda totam. Commodi, enim fuga? Laudantium,
-                            placeat magnam nam nisi voluptate reiciendis qui modi fugit
-                            atque, aspernatur ratione!
+                        ' . $row['post_data'] . '
                         </p>
-                    </div>
-                    <div class="post_interections">
-                        <i class="fa-regular fa-heart like"></i>
-                        <div class="input_container">
-                            <input type="text" placeholder="Comment..." />
-                            <button><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div class="post_interections">
+                        <i class="fa-regular fa-heart like"></i>
+                        <i class="fa-regular fa-comment comment"></i>
+                        <div class="input_container">
+                        <input type="text" placeholder="Comment..." />
+                        <button><i class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>';
+                    }
+                }
+
+            }
+            ?>
         </section>
         <section class="suggestion_area">
             <div class="suggestion_container">
                 <div class="title">Suggestions</div>
                 <div class="suggestion_list">
-                    <div class="suggestion">
-                        <img src="./assets/image/profile.jpg" alt="profile" />
-                        <div class="data">
-                            <h3 class="fullname">Aryan parmar</h3>
-                            <h3 class="username"><span>@</span>aryy</h3>
-                        </div>
-                        <button class="follow"><span>👀</span> Follow</button>
-                    </div>
+                    <?php
+                    foreach ($users as $user) {
+                        echo '<div class="suggestion">
+                            <img src=' . $user['profile_link'] . ' alt="profile" />
+                            <div class="data">
+                                <h3 class="fullname"><a href="/profile/index.php?username=' . $user['username'] . '">' . $user['fullname'] . '</a></h3>
+                                <h3 class="username"><span>@</span>' . $user['username'] . '</h3>
+                            </div>
+                            <button class="follow" data-id="' . $user["user_id"] . '" >Follow</button>'
+                            . '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </section>

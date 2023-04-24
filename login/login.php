@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $results = mysqli_query($db, $query);
       $user = mysqli_fetch_assoc($results);
       if (mysqli_num_rows($results) == 1) {
-         $_SESSION['username'] = $user['username'];
+         $_SESSION['user_id'] = $user['user_id'];
          header('location: /index.php');
       } else {
          array_push($errors, "Wrong username/password combination");

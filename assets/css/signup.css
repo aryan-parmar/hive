@@ -101,6 +101,7 @@ h4 {
     font-size: 1rem;
     background: #282828;
     color: #e7e7e7;
+    outline: none;
 }
 
 .form input::-webkit-input-placeholder {
