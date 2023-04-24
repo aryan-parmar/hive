@@ -187,9 +187,16 @@ body {
   align-items: center;
   position: relative;
 }
-.profile_area .post_area .post_container:hover .post_delete {
+.profile_area .post_area .post_container:hover .post_delete, .profile_area .post_area .post_container:hover .post_report {
   left: calc(100% - 50px);
   opacity: 1;
+  z-index: 9;
+}
+.profile_area .post_area .post_container:hover .post_img {
+  position: relative;
+}
+.profile_area .post_area .post_container:hover .post_img::after {
+  background-color: rgba(0, 0, 0, 0.7019607843);
 }
 .profile_area .post_area .post_container .post_profile {
   position: absolute;
@@ -222,6 +229,8 @@ body {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   opacity: 0;
+  top: 10px;
+  box-shadow: 0 0 15px 0 rgb(105, 105, 105);
 }
 .profile_area .post_area .post_container .post_delete:hover {
   background-color: rgb(154, 110, 110);
@@ -230,11 +239,46 @@ body {
 .profile_area .post_area .post_container .post_delete i {
   pointer-events: none;
 }
+.profile_area .post_area .post_container .post_report {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #292929;
+  color: rgb(154, 110, 110);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  opacity: 0;
+  top: 10px;
+  box-shadow: 0 0 15px 0 rgb(105, 105, 105);
+}
+.profile_area .post_area .post_container .post_report:hover {
+  background-color: rgb(154, 110, 110);
+  color: #292929;
+}
+.profile_area .post_area .post_container .post_report i {
+  pointer-events: none;
+}
 .profile_area .post_area .post_container .post_img {
   width: 100%;
   background-color: #292929;
   border-top-right-radius: 10px;
   overflow: hidden;
+}
+.profile_area .post_area .post_container .post_img::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all 0.2s ease-in-out;
 }
 .profile_area .post_area .post_container .post_img img {
   width: 100%;

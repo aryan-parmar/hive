@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <section class="sidenav">
             <div class="logo">Hive</div>
             <div class="link_container">
-                <ul>    
+                <ul>
                     <li class="link_list">
                         <a href="/" class="navlink"><i class="fa-solid fa-house"></i><span
                                 class="navlink_text">home</span></a>
@@ -77,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li class="link_list">
                         <a href="/add" class="navlink"><i class="fa-solid fa-circle-plus" style=""></i><span
                                 class="navlink_text">add</span></a>
+                    </li>
+                    <li class="link_list">
+                        <a href="/add-users" class="navlink"><i class="fa-solid fa-user-plus"></i></i><span
+                                class="navlink_text">add users</span></a>
                     </li>
                     <li class="link_list">
                         <a href="/profile" class="navlink"><i class="fa-solid fa-circle-user"></i><span
@@ -92,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <img src="<?php echo $profile_link; ?>" alt="Profile Image" class="image-pre">
                     <input type="file" id="profile_image" name="profile_image" accept="image/*" class="image-inp">
                 </div>
-                <input type="text" id="username" name="username" value="<?php echo $username; ?>" required
-                    disabled>
+                <input type="text" id="username" name="username" value="<?php echo $username; ?>" required disabled>
                 <input type="text" id="fullname" name="fullname" value="<?php echo $fullname; ?>">
                 <textarea id="bio" name="bio" rows="5" cols="10"><?php echo $bio; ?></textarea>
                 <input type="submit" value="Save">
+                <button type="button" class="logout">Logout</button>
+            </form>
         </section>
-        </form>
     </section>
 </body>
 <script>
@@ -114,5 +118,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             reader.readAsDataURL(file);
         }
     });
+    const logout = document.querySelector('.logout');
+    logout.addEventListener('click', function () {
+        window.location.href = '/logout.php';
+    });
 </script>
+
 </html>

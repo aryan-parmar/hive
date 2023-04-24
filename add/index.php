@@ -53,6 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 class="navlink_text">add</span></a>
                     </li>
                     <li class="link_list">
+                        <a href="/add-users" class="navlink"><i class="fa-solid fa-user-plus"></i></i><span
+                                class="navlink_text">add users</span></a>
+                    </li>
+                    <li class="link_list">
                         <a href="/profile" class="navlink"><i class="fa-solid fa-circle-user"></i><span
                                 class="navlink_text">profile</span></a>
                     </li>

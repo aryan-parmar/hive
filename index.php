@@ -73,6 +73,10 @@ foreach ($user_array as $user_id) {
                                 class="navlink_text">add</span></a>
                     </li>
                     <li class="link_list">
+                        <a href="/add-users" class="navlink"><i class="fa-solid fa-user-plus"></i></i><span
+                                class="navlink_text">add users</span></a>
+                    </li>
+                    <li class="link_list">
                         <a href="/profile" class="navlink"><i class="fa-solid fa-circle-user"></i><span
                                 class="navlink_text">profile</span></a>
                     </li>
@@ -85,10 +89,10 @@ foreach ($user_array as $user_id) {
             $query = "SELECT ud.profile_link, ud.username, ud.fullname, p.* FROM post as p, user_data as ud WHERE p.fk_user_id = " . $_SESSION['user_id'] . "AND ud.user_id = p.fk_user_id ORDER BY post_id DESC LIMIT 20";
             $query = "SELECT p.*, u.* 
             FROM post p 
-            INNER JOIN follow f ON p.fk_user_id = f.fk_other_user_id 
+            INNER JOIN follow f ON p.fk_user_id = f.fk_other_user_id AND f.pending = 0
             INNER JOIN user_data u ON p.fk_user_id = u.user_id 
             WHERE f.fk_user_id = " . $_SESSION['user_id'] . " AND u.user_id = p.fk_user_id
-            ORDER BY post_id DESC LIMIT 20
+            ORDER BY post_id DESC LIMIT 10
             ";
 
             $result = mysqli_query($db, $query);
@@ -98,11 +102,21 @@ foreach ($user_array as $user_id) {
                     ';
             } else {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    if($row['post_img'] == NULL){
+                    $query = "select * from likes where fk_post_id = " . $row['post_id'] . " AND fk_user_id = " . $_SESSION['user_id'];
+                    $result2 = mysqli_query($db, $query);
+                    if (mysqli_num_rows($result2) == 0) {
+                        $like = "";
+                    } else {
+                        $like = "liked";
+                    }
+                    $query = "select COUNT(*) from likes where fk_post_id = " . $row['post_id'];
+                    $result2 = mysqli_query($db, $query);
+                    $likes = mysqli_fetch_assoc($result2);
+                    if ($row['post_img'] == NULL) {
                         echo '<div class="post_container">
                         <div class="post_title">
-                    <img src="' . $row['profile_link'] . '" alt="profile" />
-                    <h6><a href="/profile/index.php?username='.$row['username'].'">' . $row['username'] . '</a></h6>
+                    <img src="' . $row['profile_link'] . '" alt="profile" draggable="false"/>
+                    <h6><a href="/profile/index.php?username=' . $row['username'] . '">' . $row['username'] . '</a></h6>
                     <button><i class="fa-solid fa-bars"></i></button>
                 </div>
                 <div class="post_footer">
@@ -112,7 +126,8 @@ foreach ($user_array as $user_id) {
                         </p>
                     </div>
                     <div class="post_interections">
-                        <i class="fa-regular fa-heart like"></i>
+                    <i class="fa-regular fa-heart like ' . $like . '" data-id="' . $row['post_id'] . '"></i>
+                        <h3 class="like-count">'.$likes['COUNT(*)'].'</h3>
                         <i class="fa-regular fa-comment comment"></i>
                         <div class="input_container">
                             <input type="text" placeholder="Comment..." />
@@ -121,16 +136,16 @@ foreach ($user_array as $user_id) {
                     </div>
                 </div>
                 </div>';
-                    }else{
+                    } else {
 
                         echo '<div class="post_container">
                         <div class="post_title">
-                        <img src="' . $row['profile_link'] . '" alt="profile" />
-                        <h6><a href="/profile/index.php?username='.$row['username'].'">' . $row['username'] . '</a></h6>
+                        <img src="' . $row['profile_link'] . '" alt="profile" draggable="false" />
+                        <h6><a href="/profile/index.php?username=' . $row['username'] . '">' . $row['username'] . '</a></h6>
                         <button><i class="fa-solid fa-bars"></i></button>
                         </div>
                         <div class="post_img">
-                        <img src="' . $row['post_img'] . '" alt="post" />
+                        <img src="' . $row['post_img'] . '" alt="post" draggable="false" />
                         </div>
                         <div class="post_footer">
                         <div class="post_caption">
@@ -139,7 +154,8 @@ foreach ($user_array as $user_id) {
                         </p>
                         </div>
                         <div class="post_interections">
-                        <i class="fa-regular fa-heart like"></i>
+                        <i class="fa-regular fa-heart like ' . $like . '" data-id="' . $row['post_id'] . '"></i>
+                        <h3 class="like-count">'.$likes['COUNT(*)'].'</h3>
                         <i class="fa-regular fa-comment comment"></i>
                         <div class="input_container">
                         <input type="text" placeholder="Comment..." />

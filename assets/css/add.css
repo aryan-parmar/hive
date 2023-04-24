@@ -61,7 +61,7 @@ input[type=text]:disabled {
   color: #838383;
 }
 
-.btn, input[type=submit] {
+.btn, input[type=submit], .logout {
   height: 50px;
   background-color: #ffd7be;
   color: #232323;
@@ -186,7 +186,7 @@ input[type=submit]:hover {
   width: 100%;
   gap: 20px;
 }
-.add_post_area form .btn, .add_post_area form input[type=submit] {
+.add_post_area form .btn, .add_post_area form input[type=submit], .add_post_area form .logout {
   width: 100%;
 }
 .add_post_area form .btn {
@@ -198,4 +198,82 @@ input[type=submit]:hover {
   align-items: center;
   text-decoration: none;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.add_post_area form .logout {
+  background-color: #ff4f4f;
+  margin-bottom: 50px;
+}
+
+.suggestion {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #1e1e1e, #2f2f2f);
+  padding: 5px;
+}
+.suggestion img {
+  width: 32px;
+  height: 32px;
+  margin: 0 10px;
+  margin-left: 20px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+.suggestion .data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1;
+}
+.suggestion .data h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #dcdcdc;
+}
+.suggestion .data h3 a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+.suggestion .data h3 a:hover {
+  text-decoration: underline;
+}
+.suggestion .data .username {
+  font-weight: 400;
+}
+.suggestion button {
+  background-color: rgb(0, 85, 165);
+  border: none;
+  outline: none;
+  height: 32px;
+  cursor: pointer;
+  margin-right: 20px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  font-size: 0.7rem;
+  padding: 0 8px;
+  font-weight: bold;
+}
+.suggestion button span {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  visibility: hidden;
+  font-size: large;
+  transform: translate(-50%, -50%);
+}
+.suggestion .accept {
+  background-color: #ffffff;
+  color: #232323;
+}
+.suggestion .accept:hover {
+  background-color: #e6e6e6;
 }/*# sourceMappingURL=add.css.map */

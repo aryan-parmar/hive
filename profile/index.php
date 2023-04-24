@@ -62,6 +62,10 @@ if (isset($_GET['username'])) {
                                 class="navlink_text">add</span></a>
                     </li>
                     <li class="link_list">
+                        <a href="/add-users" class="navlink"><i class="fa-solid fa-user-plus"></i></i><span
+                                class="navlink_text">add users</span></a>
+                    </li>
+                    <li class="link_list">
                         <a href="/profile" class="navlink"><i class="fa-solid fa-circle-user"></i><span
                                 class="navlink_text">profile</span></a>
                     </li>
@@ -141,14 +145,20 @@ if (isset($_GET['username'])) {
                 </div>';
                     }
                     while ($post = mysqli_fetch_assoc($result)) {
+                        $o = '<div class="post_delete" data-id=' . $post["post_id"] . '>
+                        <i class="fa-regular fa-trash-can"></i>
+                        </div>';
+                        if(isset($_GET['username'])){
+                            $o='<div class="post_report" data-id=' . $post["post_id"] . '>
+                            <i class="fa-regular fa-flag"></i>
+                            </div>';
+                        }
                         if ($post['post_img'] == NULL) {
                             echo '<div class="post_container">
                         <div class="post_profile">
                             <img src="' . $user["profile_link"] . '" alt="profile" />
                         </div>
-                        <div class="post_delete" data-id=' . $post["post_id"] . '>
-                        <i class="fa-regular fa-trash-can"></i>
-                        </div>
+                        '.$o.'
                         <div class="post_footer" style="border-top-right-radius: 10px">
                             <div class="post_caption">
                                 <p>
@@ -164,9 +174,7 @@ if (isset($_GET['username'])) {
                             <div class="post_profile">
                             <img src="' . $user["profile_link"] . '" alt="profile" />
                             </div>
-                            <div class="post_delete" data-id=' . $post["post_id"] . '>
-                            <i class="fa-regular fa-trash-can"></i>
-                            </div>
+                            '.$o.'
                             <div class="post_img">
                             <img src="' . $post["post_img"] . '" alt="post" />
                             </div>

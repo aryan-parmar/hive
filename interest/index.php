@@ -1,3 +1,20 @@
+<?php
+include("../config.php");
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  $query = "DELETE FROM user_interest WHERE fk_user_id = " . $_SESSION['user_id'];
+  $result = mysqli_query($db, $query);
+  $interests = $_POST['interests'];
+  foreach ($interests as $interest) {
+    $query = "INSERT INTO user_interest (fk_user_id, fk_interest_id) VALUES ('" . $_SESSION['user_id'] . "', '" . $interest . "')";
+    $result = mysqli_query($db, $query);
+  }
+  header('location: /');
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -94,14 +111,8 @@
     <h1>Interests</h1>
     <p>What are your interests?</p>
     <?php
-    // Step 1: Connect to MySQL database
-    include("../config.php");
-    session_start();
-    // Step 2: Fetch interests from MySQL table
     $query = "SELECT * FROM interests";
     $result = mysqli_query($db, $query);
-
-    // Step 3: Display interests as checkboxes on HTML page
     if (isset($_GET['search'])) {
       $search = mysqli_real_escape_string($db, $_GET['search']);
       $query .= " where interest LIKE '%" . $search . "%'";
@@ -114,11 +125,9 @@
 
     $user_interests = array();
 
-    // Store the user's interests in an array
     while ($row = mysqli_fetch_assoc($user_interests_result)) {
       $user_interests[] = $row['fk_interest_id'];
     }
-    // Step 3: Display interests as checkboxes on HTML page
     echo "<form method='GET'>";
     echo "<input type='text' name='search' placeholder='Search interests'>";
     echo "<input type='submit' value='Search'>";
@@ -135,7 +144,6 @@
           . "</label>"
           . "</div>";
       } else {
-
         echo "
         <div class='card'>
         <input type='checkbox' name='interests[]' value='" . $row['interest_id'] . "' id='" . $row['interest_id']
@@ -146,22 +154,8 @@
       }
     }
     echo "</div>";
-
     echo "<input type='submit' value='Save' >";
     echo "</form>";
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-      $query = "DELETE FROM user_interest WHERE fk_user_id = " . $_SESSION['user_id'];
-      $result = mysqli_query($db, $query);
-      $interests = $_POST['interests'];
-      foreach ($interests as $interest) {
-        $query = "INSERT INTO user_interest (fk_user_id, fk_interest_id) VALUES ('" . $_SESSION['user_id'] . "', '" . $interest . "')";
-        $result = mysqli_query($db, $query);
-      }
-      header('location: /');
-      exit();
-    }
     ?>
   </div>
 </body>
