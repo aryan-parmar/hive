@@ -71,19 +71,19 @@ foreach ($user_array as $user_id) {
                 <ul>
                     <li class="link_list">
                         <a href="#" class="navlink"><i class="fa-solid fa-house"></i><span
-                                class="navlink_text">home</span></a>
+                                class="navlink_text">Home</span></a>
                     </li>
                     <li class="link_list">
                         <a href="/add" class="navlink"><i class="fa-solid fa-circle-plus" style=""></i><span
-                                class="navlink_text">add</span></a>
+                                class="navlink_text">Add</span></a>
                     </li>
                     <li class="link_list">
                         <a href="/add-users" class="navlink"><i class="fa-solid fa-user-plus"></i></i><span
-                                class="navlink_text">add users</span></a>
+                                class="navlink_text">Add users</span></a>
                     </li>
                     <li class="link_list">
                         <a href="/profile" class="navlink"><i class="fa-solid fa-circle-user"></i><span
-                                class="navlink_text">profile</span></a>
+                                class="navlink_text">Profile</span></a>
                     </li>
                 </ul>
             </div>
