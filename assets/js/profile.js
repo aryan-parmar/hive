@@ -56,3 +56,21 @@ document.querySelectorAll(".post_delete").forEach((element) => {
     xhr.send("id=" + e.target.dataset.id + "&delete=delete");
   });
 });
+
+document.querySelectorAll(".post_report").forEach((element) => {
+  element.addEventListener("click", (e) => {
+    e.target.disabled = true;
+    let url = "/post/report.php";
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        if (xhr.responseText == 1) {
+          alert("Reported");
+        }
+      }
+    };
+    xhr.send("id=" + e.target.dataset.id + "&report=report");
+  });
+});

@@ -172,6 +172,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
   gap: 10px;
   padding: 0 20px;
   width: 95%;
@@ -185,6 +186,47 @@ body {
   max-height: 100px;
   overflow-y: hidden;
   width: 100%;
+}
+.post_area .post_container .post_footer .post_caption .comment_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+.post_area .post_container .post_footer .post_caption .comment_container .comment_title {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.post_area .post_container .post_footer .post_caption .comment_container .comment_title img {
+  width: 20px;
+  height: 20px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+.post_area .post_container .post_footer .post_caption .comment_container .comment_title h6 {
+  margin: 0;
+  padding: 0;
+  font-size: small;
+}
+.post_area .post_container .post_footer .post_caption .comment_container .comment_title h6 a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+.post_area .post_container .post_footer .post_caption .comment_container .comment_title h6 a:hover {
+  text-decoration: underline;
+}
+.post_area .post_container .post_footer .post_caption .comment_container .comment_title p {
+  margin: 0;
+  padding: 0;
+  font-size: small;
+  color: #dcdcdc;
+  font-weight: 500;
 }
 .post_area .post_container .post_footer .post_interections {
   display: flex;

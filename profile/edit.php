@@ -1,12 +1,18 @@
 <?php
-// Connect to database
 include('../config.php');
 session_start();
-// Get user data
+
 $user_id = $_SESSION['user_id'];
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../index.php');
 }
+$query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
+$result = mysqli_query($db, $query);
+$user = mysqli_fetch_assoc($result);
+if($user['admin'] == 1){
+    header('location: /admin');
+}
+
 $sql = "SELECT * FROM user_data WHERE user_id = $user_id";
 $result = $db->query($sql);
 if ($result->num_rows > 0) {
@@ -17,13 +23,14 @@ if ($result->num_rows > 0) {
     $profile_link = $row['profile_link'];
 }
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //   $username = $_POST['username'];
     $fullname = $_POST['fullname'];
     $bio = $_POST['bio'];
-
-    // Handle profile image upload
+    $private = 0;
+    if (isset($_POST['account'])) {
+        $private = 1;
+    }
     if ($_FILES['profile_image']['name']) {
         $image_name = $_FILES['profile_image']['name'];
         $image_tmp_name = $_FILES['profile_image']['tmp_name'];
@@ -31,16 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $ext;
         $target_dir = "../assets/image/profile/" . $username . "." . $ext;
         if (file_exists($target_dir)) {
-            chmod($target_dir, 0755); //Change the file permissions if allowed
-            unlink($target_dir); //remove the file
+            chmod($target_dir, 0755);
+            unlink($target_dir);
         }
         move_uploaded_file($image_tmp_name, $target_dir);
-        $sql = "UPDATE user_data SET profile_link = '/assets/image/profile/$username.$ext', fullname = '$fullname', bio = '$bio' WHERE user_id = $user_id";
+        $sql = "UPDATE user_data SET profile_link = '/assets/image/profile/$username.$ext', fullname = '$fullname', bio = '$bio', private= '$private' WHERE user_id = $user_id";
     } else {
-        $sql = "UPDATE user_data SET fullname = '$fullname', bio = '$bio' WHERE user_id = $user_id";
+        $sql = "UPDATE user_data SET fullname = '$fullname', bio = '$bio', private= '$private' WHERE user_id = $user_id";
 
     }
-    // Update user data
     if ($db->query($sql) === TRUE) {
         echo "Profile updated successfully";
         header('Location: /profile');
@@ -99,7 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" id="username" name="username" value="<?php echo $username; ?>" required disabled>
                 <input type="text" id="fullname" name="fullname" value="<?php echo $fullname; ?>">
                 <textarea id="bio" name="bio" rows="5" cols="10"><?php echo $bio; ?></textarea>
+                <label for="account">Private?</label>
+                <input type="checkbox" id="account" name="account" value="true">
                 <input type="submit" value="Save">
+                <button type="button" class="up-btn">Update Interests</button>
+                <?php if($user['verified']!=1) 
+                echo '<button type="button" class="req-btn">Request Verification</button>';
+                ?>
                 <button type="button" class="logout">Logout</button>
             </form>
         </section>
@@ -121,6 +133,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     const logout = document.querySelector('.logout');
     logout.addEventListener('click', function () {
         window.location.href = '/logout.php';
+    });
+    const upBtn = document.querySelector('.up-btn');
+    upBtn.addEventListener('click', function () {
+        window.location.href = '/interest';
+    });
+    const reqBtn = document.querySelector('.req-btn');
+    reqBtn.addEventListener('click', function () {
+        reqBtn.disabled = true;
+        let url = "/profile/request.php";
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText == 1) {
+                    alert("Added for verification");
+                }
+            }
+        };
+        xhr.send("id=" + <?php echo $_SESSION['user_id'] ?> + "&request=report");
     });
 </script>
 

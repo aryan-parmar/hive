@@ -36,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (count($errors) == 0) {
     $hashpassword = md5($password);
-
     $query = "INSERT INTO user_data (username, email, password, fullname) 
   			  VALUES('$username', '$email', '$hashpassword', '$fullname')";
     mysqli_query($db, $query);

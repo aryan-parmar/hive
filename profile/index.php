@@ -81,10 +81,14 @@ if (isset($_GET['username'])) {
                             <?php echo $user['fullname'] ?>
                         </h1>
                         <p>
-                            <?php echo $user['username'] ?>
+                            <?php
+                            $badge = '';
+                            if ($user['verified'] == 1) {
+                                $badge = ' <i class="fa-solid fa-certificate" style="color: rgb(0, 85, 165); font-size:large;"></i>';
+                            }
+                            echo $user['username'] . $badge ?>
                         </p>
                         <div class="follow-container">
-
                             <?php
                             if (isset($_GET['username'])) {
                                 echo "<a href='/follower?username=" . $_GET['username'] . "'>";
@@ -107,27 +111,27 @@ if (isset($_GET['username'])) {
                                     echo $res['COUNT(*)']; ?>
                                 </span></h4></a>
 
-                                <?php
+                            <?php
                             if (isset($_GET['username'])) {
                                 echo "<a href='/following?username=" . $_GET['username'] . "'>";
                             } else {
                                 echo "<a href='/following'>";
                             }
                             ?>
-                                <h4>following <span>
-                                        <?php
-                                        if (isset($_GET['username'])) {
-                                            $query = "SELECT * FROM user_data WHERE username = '" . $_GET['username'] . "'";
-                                            $result = mysqli_query($db, $query);
-                                            $res = mysqli_fetch_assoc($result);
-                                            $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_user_id=" . $res['user_id'];
-                                        } else {
-                                            $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_user_id=" . $_SESSION['user_id'];
-                                        }
+                            <h4>following <span>
+                                    <?php
+                                    if (isset($_GET['username'])) {
+                                        $query = "SELECT * FROM user_data WHERE username = '" . $_GET['username'] . "'";
                                         $result = mysqli_query($db, $query);
                                         $res = mysqli_fetch_assoc($result);
-                                        echo $res['COUNT(*)']; ?>
-                                    </span></h4>
+                                        $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_user_id=" . $res['user_id'];
+                                    } else {
+                                        $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_user_id=" . $_SESSION['user_id'];
+                                    }
+                                    $result = mysqli_query($db, $query);
+                                    $res = mysqli_fetch_assoc($result);
+                                    echo $res['COUNT(*)']; ?>
+                                </span></h4>
                             </a>
                         </div>
                     </div>

@@ -5,10 +5,6 @@ if (!isset($_SESSION['user_id'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: /login');
 }
-$query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
-$result = mysqli_query($db, $query);
-$user = mysqli_fetch_assoc($result);
-
 if (isset($_GET['username'])) {
     $query = "SELECT * FROM user_data WHERE username='" . $_GET['username'] . "'";
     $result = mysqli_query($db, $query);
@@ -69,18 +65,18 @@ if (isset($_GET['username'])) {
             <?php
             if (!isset($_GET['username'])) {
                 $query = "SELECT * FROM follow WHERE pending=0 AND fk_user_id = " . $_SESSION['user_id'];
-            }else{
-                $query = "SELECT * FROM user_data WHERE username = '" . $_GET['username']."'";
+            } else {
+                $query = "SELECT * FROM user_data WHERE username = '" . $_GET['username'] . "'";
                 $result = mysqli_query($db, $query);
                 $res = mysqli_fetch_assoc($result);
-                
-                
+
+
                 $query = "SELECT * FROM follow WHERE pending=0 AND fk_user_id = " . $res['user_id'];
             }
             $result = mysqli_query($db, $query);
-            
-            while($row = mysqli_fetch_assoc($result)){
-                
+
+            while ($row = mysqli_fetch_assoc($result)) {
+
                 $query = "SELECT * FROM user_data WHERE user_id = " . $row['fk_other_user_id'];
                 $result2 = mysqli_query($db, $query);
                 $user = mysqli_fetch_assoc($result2);

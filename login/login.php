@@ -2,6 +2,7 @@
 include("../config.php");
 session_start();
 $errors = array();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $email = mysqli_real_escape_string($db, $_POST['email']);
    $password = mysqli_real_escape_string($db, $_POST['password']);
@@ -20,7 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $user = mysqli_fetch_assoc($results);
       if (mysqli_num_rows($results) == 1) {
          $_SESSION['user_id'] = $user['user_id'];
-         header('location: /index.php');
+         $_SESSION['admin'] = $user['admin'];
+         if ($user['admin'] == 1) {
+            header('location: /admin');
+         } else {
+            header('location: /index.php');
+         }
       } else {
          array_push($errors, "Wrong username/password combination");
       }

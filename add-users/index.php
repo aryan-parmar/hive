@@ -5,42 +5,13 @@ if (!isset($_SESSION['user_id'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: /login');
 }
+
+
 $query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
 $result = mysqli_query($db, $query);
 $user = mysqli_fetch_assoc($result);
-
-$query = "SELECT * FROM user_interest WHERE fk_user_id = " . $_SESSION['user_id'];
-$user_interest = [];
-$result = mysqli_query($db, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-    array_push($user_interest, $row['fk_interest_id']);
-}
-$user_array = [];
-foreach ($user_interest as $interest) {
-    $query = "SELECT ui.fk_user_id
-    FROM user_interest ui
-    WHERE 
-    ui.fk_interest_id =" . $interest
-        . " AND ui.fk_user_id <> " . $_SESSION['user_id']
-        . " AND ui.fk_user_id NOT IN (
-      SELECT f.fk_other_user_id
-      FROM follow f
-      WHERE f.fk_user_id = " . $_SESSION['user_id']
-        . ") LIMIT 10";
-    $result = mysqli_query($db, $query);
-    while ($row = mysqli_fetch_assoc($result)) {
-        // printf($row);
-        array_push($user_array, $row['fk_user_id']);
-    }
-}
-$user_array = array_unique($user_array);
-$user_array = array_values($user_array);
-$users = [];
-foreach ($user_array as $user_id) {
-    $query = "SELECT * FROM user_data WHERE user_id = " . $user_id;
-    $result = mysqli_query($db, $query);
-    $user = mysqli_fetch_assoc($result);
-    array_push($users, $user);
+if($user['admin'] == 1){
+    header('location: /admin');
 }
 
 ?>

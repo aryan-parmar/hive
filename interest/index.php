@@ -2,6 +2,19 @@
 include("../config.php");
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+  $_SESSION['msg'] = "You must log in first";
+  header('location: /login');
+}
+
+
+$query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
+$result = mysqli_query($db, $query);
+$user = mysqli_fetch_assoc($result);
+if($user['admin'] == 1){
+  header('location: /admin');
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $query = "DELETE FROM user_interest WHERE fk_user_id = " . $_SESSION['user_id'];

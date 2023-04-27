@@ -5,9 +5,14 @@ if (!isset($_SESSION['user_id'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: /login');
 }
+
+
 $query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
 $result = mysqli_query($db, $query);
 $user = mysqli_fetch_assoc($result);
+if ($user['admin'] == 1) {
+    header('location: /admin');
+}
 
 $query = "SELECT * FROM user_interest WHERE fk_user_id = " . $_SESSION['user_id'];
 $user_interest = [];
@@ -112,36 +117,57 @@ foreach ($user_array as $user_id) {
                     $query = "select COUNT(*) from likes where fk_post_id = " . $row['post_id'];
                     $result2 = mysqli_query($db, $query);
                     $likes = mysqli_fetch_assoc($result2);
+
+                    $query = "select c.*, u.* from comments c inner join user_data u on u.user_id = c.fk_user_id where fk_post_id = " . $row['post_id'];
+                    $result2 = mysqli_query($db, $query);
+
+                    $badge = '';
+                    if ($row['verified'] == 1) {
+                        $badge = ' <i class="fa-solid fa-certificate" style="color: rgb(0, 85, 165); font-size:medium;"></i>';
+                    }
                     if ($row['post_img'] == NULL) {
                         echo '<div class="post_container">
-                        <div class="post_title">
-                    <img src="' . $row['profile_link'] . '" alt="profile" draggable="false"/>
-                    <h6><a href="/profile/index.php?username=' . $row['username'] . '">' . $row['username'] . '</a></h6>
-                    <button><i class="fa-solid fa-bars"></i></button>
-                </div>
-                <div class="post_footer">
-                    <div class="post_caption">
-                        <p>
-                            ' . $row['post_data'] . '
-                        </p>
-                    </div>
-                    <div class="post_interections">
-                    <i class="fa-regular fa-heart like ' . $like . '" data-id="' . $row['post_id'] . '"></i>
-                        <h3 class="like-count">'.$likes['COUNT(*)'].'</h3>
-                        <i class="fa-regular fa-comment comment"></i>
-                        <div class="input_container">
-                            <input type="text" placeholder="Comment..." />
-                            <button data-id="' . $row['post_id'] . '" class="comment-btn"><i data-id="' . $row['post_id'] . '" class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
+                                <div class="post_title">
+                            <img src="' . $row['profile_link'] . '" alt="profile" draggable="false"/>
+                            <h6><a href="/profile/index.php?username=' . $row['username'] . '">' . $row['username'] . $badge. '</a></h6>
+                            <button><i class="fa-solid fa-bars"></i></button>
                         </div>
-                    </div>
-                </div>
-                </div>';
-                    } else {
+                        <div class="post_footer">
+                            <div class="post_caption">
+                                <p>
+                                    ' . $row['post_data'] . '
+                                </p>';
 
+                        while ($comment = mysqli_fetch_assoc($result2)) {
+                            echo '<div class="comment_container">
+                                <div class="comment_title">
+                                    <img src="' . $comment['profile_link'] . '" alt="profile" draggable="false" />
+                                    <h6><a href="/profile/index.php?username=' . $comment['username'] . '">' . $comment['username'] . '</a></h6>
+                                        <p>
+                                            ' . $comment['comment'] . '
+                                        </p>
+                                    </div>
+                            </div>';
+                        }
+
+                        echo '
+                            </div>
+                            <div class="post_interections">
+                            <i class="fa-regular fa-heart like ' . $like . '" data-id="' . $row['post_id'] . '"></i>
+                                <h3 class="like-count">' . $likes['COUNT(*)'] . '</h3>
+                                <a href="/post/?id=' . $row['post_id'] . '"><i class="fa-regular fa-comment comment"></i></a>
+                                <div class="input_container">
+                                    <input type="text" placeholder="Comment..." />
+                                    <button data-id="' . $row['post_id'] . '" class="comment-btn"><i data-id="' . $row['post_id'] . '" class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>';
+                    } else {
                         echo '<div class="post_container">
                         <div class="post_title">
                         <img src="' . $row['profile_link'] . '" alt="profile" draggable="false" />
-                        <h6><a href="/profile/index.php?username=' . $row['username'] . '">' . $row['username'] . '</a></h6>
+                        <h6><a href="/profile/index.php?username=' . $row['username'] . '">' . $row['username'] .$badge. '</a></h6>
                         <button><i class="fa-solid fa-bars"></i></button>
                         </div>
                         <div class="post_img">
@@ -151,12 +177,26 @@ foreach ($user_array as $user_id) {
                         <div class="post_caption">
                         <p>
                         ' . $row['post_data'] . '
-                        </p>
+                        </p>';
+
+                        while ($comment = mysqli_fetch_assoc($result2)) {
+                            echo '<div class="comment_container">
+                                <div class="comment_title">
+                                    <img src="' . $comment['profile_link'] . '" alt="profile" draggable="false" />
+                                    <h6><a href="/profile/index.php?username=' . $comment['username'] . '">' . $comment['username'] . '</a></h6>
+                                        <p>
+                                            ' . $comment['comment'] . '
+                                        </p>
+                                    </div>
+                            </div>';
+                        }
+
+                        echo '
                         </div>
                         <div class="post_interections">
                         <i class="fa-regular fa-heart like ' . $like . '" data-id="' . $row['post_id'] . '"></i>
-                        <h3 class="like-count">'.$likes['COUNT(*)'].'</h3>
-                        <i class="fa-regular fa-comment comment"></i>
+                        <h3 class="like-count">' . $likes['COUNT(*)'] . '</h3>
+                        <a href="/post/?id=' . $row['post_id'] . '"><i class="fa-regular fa-comment comment"></i></a>
                         <div class="input_container">
                         <input type="text" placeholder="Comment..." />
                         <button data-id="' . $row['post_id'] . '" class="comment-btn"><i data-id="' . $row['post_id'] . '" class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
@@ -177,7 +217,7 @@ foreach ($user_array as $user_id) {
                     <?php
                     foreach ($users as $user) {
                         $badge = '';
-                        if($user['verified'] == 1){
+                        if ($user['verified'] == 1) {
                             $badge = ' <i class="fa-solid fa-certificate" style="color: rgb(0, 85, 165);"></i>';
                         }
 
