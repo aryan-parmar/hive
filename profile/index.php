@@ -154,6 +154,11 @@ if (isset($_GET['username'])) {
                         </button>';
                         }
                     }
+                    if($user['verified']==1){
+                        echo '<button class="profile_edit"><a href="mailto:'.$user['email'].'" class="">
+                            Contact
+                        </a></button>';
+                    }
                     ?>
                 </div>
                 <div class="profile_bio">
