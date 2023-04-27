@@ -8,7 +8,8 @@ CREATE TABLE user_data(
   created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   bio varchar(300),
   password varchar(500) not null,
-  private boolean default 1
+  private boolean default 1,
+  admin boolean default 0
   );
 
 CREATE TABLE post(
@@ -46,4 +47,12 @@ CREATE table user_interest(
   primary key(fk_user_id, fk_interest_id)
   );
 
+CREATE TABLE report(
+  report_id int not null auto_increment primary key,
+  fk_reported_by int references user_data(user_id),
+  fk_post_id int references post(post_id)
+);
 
+CREATE TABLE verification_request(
+  fk_user_id int not null primary key references user_data(user_id),
+)
