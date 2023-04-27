@@ -83,6 +83,53 @@ if (isset($_GET['username'])) {
                         <p>
                             <?php echo $user['username'] ?>
                         </p>
+                        <div class="follow-container">
+
+                            <?php
+                            if (isset($_GET['username'])) {
+                                echo "<a href='/follower?username=" . $_GET['username'] . "'>";
+                            } else {
+                                echo "<a href='/follower'>";
+                            }
+                            ?>
+                            <h4>followers <span>
+                                    <?php
+                                    if (isset($_GET['username'])) {
+                                        $query = "SELECT * FROM user_data WHERE username = '" . $_GET['username'] . "'";
+                                        $result = mysqli_query($db, $query);
+                                        $res = mysqli_fetch_assoc($result);
+                                        $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_other_user_id=" . $res['user_id'];
+                                    } else {
+                                        $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_other_user_id=" . $_SESSION['user_id'];
+                                    }
+                                    $result = mysqli_query($db, $query);
+                                    $res = mysqli_fetch_assoc($result);
+                                    echo $res['COUNT(*)']; ?>
+                                </span></h4></a>
+
+                                <?php
+                            if (isset($_GET['username'])) {
+                                echo "<a href='/following?username=" . $_GET['username'] . "'>";
+                            } else {
+                                echo "<a href='/following'>";
+                            }
+                            ?>
+                                <h4>following <span>
+                                        <?php
+                                        if (isset($_GET['username'])) {
+                                            $query = "SELECT * FROM user_data WHERE username = '" . $_GET['username'] . "'";
+                                            $result = mysqli_query($db, $query);
+                                            $res = mysqli_fetch_assoc($result);
+                                            $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_user_id=" . $res['user_id'];
+                                        } else {
+                                            $query = "SELECT COUNT(*) FROM follow where pending=0 AND fk_user_id=" . $_SESSION['user_id'];
+                                        }
+                                        $result = mysqli_query($db, $query);
+                                        $res = mysqli_fetch_assoc($result);
+                                        echo $res['COUNT(*)']; ?>
+                                    </span></h4>
+                            </a>
+                        </div>
                     </div>
                     <?php if ($other == 0) {
                         echo '<button class="profile_edit">
@@ -148,8 +195,8 @@ if (isset($_GET['username'])) {
                         $o = '<div class="post_delete" data-id=' . $post["post_id"] . '>
                         <i class="fa-regular fa-trash-can"></i>
                         </div>';
-                        if(isset($_GET['username'])){
-                            $o='<div class="post_report" data-id=' . $post["post_id"] . '>
+                        if (isset($_GET['username'])) {
+                            $o = '<div class="post_report" data-id=' . $post["post_id"] . '>
                             <i class="fa-regular fa-flag"></i>
                             </div>';
                         }
@@ -158,7 +205,7 @@ if (isset($_GET['username'])) {
                         <div class="post_profile">
                             <img src="' . $user["profile_link"] . '" alt="profile" />
                         </div>
-                        '.$o.'
+                        ' . $o . '
                         <div class="post_footer" style="border-top-right-radius: 10px">
                             <div class="post_caption">
                                 <p>
@@ -174,7 +221,7 @@ if (isset($_GET['username'])) {
                             <div class="post_profile">
                             <img src="' . $user["profile_link"] . '" alt="profile" />
                             </div>
-                            '.$o.'
+                            ' . $o . '
                             <div class="post_img">
                             <img src="' . $post["post_img"] . '" alt="post" />
                             </div>

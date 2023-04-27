@@ -6,7 +6,6 @@ const password = form.elements.password;
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  console.log(password.value)
   if (!validatePassword(password.value)) {
     alert("Please enter a password that is at least 8 characters long.");
     return;

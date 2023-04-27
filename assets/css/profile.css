@@ -152,6 +152,28 @@ body {
   padding: 0;
   margin: 0;
 }
+.profile_area .profile .profile_img .profile_name .follow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.profile_area .profile .profile_img .profile_name .follow-container a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+.profile_area .profile .profile_img .profile_name .follow-container a:hover {
+  text-decoration: underline;
+}
+.profile_area .profile .profile_img .profile_name .follow-container a h4 {
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+}
+.profile_area .profile .profile_img .profile_name .follow-container a h4 span {
+  font-weight: bold;
+}
 .profile_area .profile .profile_bio {
   width: 100%;
 }

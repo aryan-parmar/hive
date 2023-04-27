@@ -1,8 +1,30 @@
+document.querySelectorAll('.comment-btn').forEach((element)=> {
+    element.addEventListener('click', (e) =>{
+        let comment = element.previousElementSibling.value;
+        console.log(e.target.dataset.id);
+        let url = "/post/comment.php";
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText == 1){
+                    element.previousElementSibling.value = "";
+                    alert('done');
+                }
+                else{
+                    alert('error');
+                }
+                console.log(xhr.responseText);
+            }
+        };
+        // let data = JSON.stringify(obj);
+        xhr.send("id="+e.target.dataset.id+"&comment="+comment);
+    })
+})
 document.querySelectorAll('.follow').forEach((element)=> {
     element.addEventListener('click', (e) =>{
         element.classList.toggle('following');
-        console.log(e.target.dataset.id);
-        console.log(e.target.innerHTML);
         e.target.disabled = true;
         let url = "/follow/follow.php";
         let xhr = new XMLHttpRequest();
@@ -16,7 +38,6 @@ document.querySelectorAll('.follow').forEach((element)=> {
                 else{
                     e.target.innerHTML = "Followed";
                 }
-                console.log(xhr.responseText);
             }
         };
         // let data = JSON.stringify(obj);
@@ -39,13 +60,12 @@ document.querySelectorAll('.like').forEach((element)=> {
                 }
                 if (xhr.responseText == 2){
                     e.target.classList.add('liked');
-                    document.querySelector('.active-like + .like-count').innerHTML = parseInt(document.querySelector('.like-count').innerHTML) + 1;
+                    document.querySelector('.active-like + .like-count').innerHTML = parseInt(document.querySelector('.active-like + .like-count').innerHTML) + 1;
                 }
-                console.log(xhr.responseText);
                 e.target.classList.remove('active-like');
             }
         };
-        // let data = JSON.stringify(obj);
         xhr.send("id="+e.target.dataset.id+"&like=like");
     })
 })
+

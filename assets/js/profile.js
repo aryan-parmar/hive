@@ -1,7 +1,6 @@
 document.querySelectorAll(".profile_edit").forEach((element) => {
   element.addEventListener("click", (e) => {
     e.target.disabled = true;
-    console.log(e.target.dataset.id);
     if (e.target.dataset.follow == 0) {
       let url = "/follow/follow.php";
       let xhr = new XMLHttpRequest();
@@ -14,7 +13,6 @@ document.querySelectorAll(".profile_edit").forEach((element) => {
           } else {
             e.target.innerHTML = "Followed";
           }
-          console.log(xhr.responseText);
           e.target.dataset.follow = 1;
           e.target.disabled = false;
         }
@@ -44,7 +42,6 @@ document.querySelectorAll(".profile_edit").forEach((element) => {
 document.querySelectorAll(".post_delete").forEach((element) => {
   element.addEventListener("click", (e) => {
     e.target.disabled = true;
-    console.log(e.target.dataset.id);
     let url = "/post/delete.php";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);

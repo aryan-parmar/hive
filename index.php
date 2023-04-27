@@ -97,8 +97,8 @@ foreach ($user_array as $user_id) {
 
             $result = mysqli_query($db, $query);
             if (mysqli_num_rows($result) == 0) {
-                echo '<div class="post_container">
-                    NO POSTS </div>
+                echo '<div class="post_container" style="color: #dcdcdc">
+                    NO POSTS FOR NOW FOLLOW SOMEONE TO VIEW THEIR POSTS </div>
                     ';
             } else {
                 while ($row = mysqli_fetch_assoc($result)) {
@@ -131,7 +131,7 @@ foreach ($user_array as $user_id) {
                         <i class="fa-regular fa-comment comment"></i>
                         <div class="input_container">
                             <input type="text" placeholder="Comment..." />
-                            <button><i class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
+                            <button data-id="' . $row['post_id'] . '" class="comment-btn"><i data-id="' . $row['post_id'] . '" class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@ foreach ($user_array as $user_id) {
                         <i class="fa-regular fa-comment comment"></i>
                         <div class="input_container">
                         <input type="text" placeholder="Comment..." />
-                        <button><i class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
+                        <button data-id="' . $row['post_id'] . '" class="comment-btn"><i data-id="' . $row['post_id'] . '" class="fa-solid fa-paper-plane" style="transform: rotate(45deg);"></i></button>
                         </div>
                         </div>
                         </div>
@@ -176,11 +176,16 @@ foreach ($user_array as $user_id) {
                 <div class="suggestion_list">
                     <?php
                     foreach ($users as $user) {
+                        $badge = '';
+                        if($user['verified'] == 1){
+                            $badge = ' <i class="fa-solid fa-certificate" style="color: rgb(0, 85, 165);"></i>';
+                        }
+
                         echo '<div class="suggestion">
                             <img src=' . $user['profile_link'] . ' alt="profile" />
                             <div class="data">
                                 <h3 class="fullname"><a href="/profile/index.php?username=' . $user['username'] . '">' . $user['fullname'] . '</a></h3>
-                                <h3 class="username"><span>@</span>' . $user['username'] . '</h3>
+                                <h3 class="username"><span>@</span>' . $user['username'] . $badge . '</h3>
                             </div>
                             <button class="follow" data-id="' . $user["user_id"] . '" >Follow</button>'
                             . '</div>';
