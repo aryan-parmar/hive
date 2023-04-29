@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = mysqli_fetch_assoc($result);
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['success'] = "You are now logged in";
-    header('location: /interest');
+    header('location: /interest/?redirect=true');
   }
 }
 ?>

@@ -24,7 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "INSERT INTO user_interest (fk_user_id, fk_interest_id) VALUES ('" . $_SESSION['user_id'] . "', '" . $interest . "')";
     $result = mysqli_query($db, $query);
   }
-  header('location: /');
+  if(isset($_GET['redirect'])){
+    header('location: /interest/club.php');
+  }else{
+    header('location: /');
+  }
 }
 ?>
 
@@ -113,7 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     .container {
-      height: 30vh;
+      height: 60vh;
+      width: 50vw;
       overflow-y: scroll;
     }
   </style>

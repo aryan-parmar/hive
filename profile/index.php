@@ -75,7 +75,7 @@ if (isset($_GET['username'])) {
         <section class="profile_area">
             <div class="profile">
                 <div class="profile_img">
-                    <img src=<?php echo $user['profile_link'] ?> alt="profile" />
+                    <img src='<?php echo $user['profile_link'] ?>' alt="profile" />
                     <div class="profile_name">
                         <h1>
                             <?php echo $user['fullname'] ?>

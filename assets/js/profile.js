@@ -74,3 +74,14 @@ document.querySelectorAll(".post_report").forEach((element) => {
     xhr.send("id=" + e.target.dataset.id + "&report=report");
   });
 });
+window.addEventListener("load", () => {
+  var profile_bio = document.querySelector(".profile_bio");
+  console.log(profile_bio.innerText);
+  re = /(?:https?|ftp):\/\/[\w/\-?=%.]+\.[\w/\-&?=%.]+/g;
+  match = re.exec(profile_bio.innerText)
+  console.log(match);
+  match.forEach((element) => {
+    console.log(element);
+    profile_bio.innerHTML = profile_bio.innerHTML.replace(element, "<a href='" + element + "' target='_blank'>" + element + "</a>");
+  });
+});

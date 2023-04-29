@@ -184,6 +184,13 @@ body {
   white-space: pre-wrap;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+.profile_area .profile .profile_bio a {
+  color: #88d4ff;
+  text-decoration: none;
+}
+.profile_area .profile .profile_bio a:hover {
+  text-decoration: underline;
+}
 .profile_area .profile .profile_desc {
   font-size: 1.2rem;
   color: #dcdcdc;
