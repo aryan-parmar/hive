@@ -85,7 +85,7 @@ $user = mysqli_fetch_assoc($result);
                 $user = mysqli_fetch_assoc($result2);
 
                 echo '<div class="suggestion">
-                <img src=' . $user['profile_link'] . ' alt="profile" />
+                <img src="' . $user['profile_link'] . '" alt="profile" />
                 <div class="data">
                     <h3 class="fullname"><a href="/profile/index.php?username=' . $user['username'] . '">' . $user['fullname'] . '</a></h3>
                     <h3 class="username"><span>@</span>' . $user['username'] . '</h3>

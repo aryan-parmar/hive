@@ -112,7 +112,7 @@ body {
   align-items: center;
 }
 .profile_area .profile .profile_img .profile_edit {
-  background-color: rgb(0, 85, 165);
+  background-color: rgb(0, 98, 189);
   border: none;
   outline: none;
   height: 32px;
@@ -151,6 +151,8 @@ body {
 .profile_area .profile .profile_img .profile_name p {
   padding: 0;
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 .profile_area .profile .profile_img .profile_name .follow-container {
   display: flex;
@@ -354,4 +356,13 @@ body {
   100% {
     opacity: 1;
   }
+}
+.material-symbols-outlined {
+  font-size: 1.2rem;
+  margin-left: 5px;
+  color: rgb(0, 98, 189);
+}
+
+.small {
+  font-size: 1.2rem !important;
 }/*# sourceMappingURL=profile.css.map */

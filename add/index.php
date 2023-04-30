@@ -11,12 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 $query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
 $result = mysqli_query($db, $query);
 $user = mysqli_fetch_assoc($result);
-if($user['admin'] == 1){
+if ($user['admin'] == 1) {
     header('location: /admin');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $content = $_POST['content'];
+    $content = mysqli_real_escape_string($db, $_POST['content']);
     $image = $_FILES['image']['name'];
     $image_name = uniqid() . basename($image);
     if ($content) {
@@ -107,4 +107,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     });
 </script>
+
 </html>

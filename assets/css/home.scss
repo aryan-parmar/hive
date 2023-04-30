@@ -128,8 +128,14 @@ body {
         a {
           text-decoration: none;
           color: #dcdcdc;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
           &:hover {
             text-decoration: underline;
+            span{
+              text-decoration: none;
+            }
           }
         }
       }
@@ -199,7 +205,7 @@ body {
               object-fit: cover;
               border-radius: 50%;
             }
-            h6{
+            h6 {
               margin: 0;
               padding: 0;
               font-size: small;
@@ -211,7 +217,7 @@ body {
                 }
               }
             }
-            p{
+            p {
               margin: 0;
               padding: 0;
               font-size: small;
@@ -380,7 +386,7 @@ body {
           }
         }
         button {
-          background-color: rgb(0, 85, 165);
+          background-color: rgb(0, 98, 189);
           border: none;
           outline: none;
           height: 32px;
@@ -416,4 +422,12 @@ body {
   100% {
     opacity: 1;
   }
+}
+.material-symbols-outlined {
+  font-size: 1.2rem;
+  margin-left: 5px;
+  color: rgb(0, 98, 189);
+}
+.small{
+  font-size: 1rem !important;
 }

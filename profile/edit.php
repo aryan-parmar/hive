@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 $query = "SELECT * FROM user_data WHERE user_id = " . $_SESSION['user_id'];
 $result = mysqli_query($db, $query);
 $user = mysqli_fetch_assoc($result);
-if($user['admin'] == 1){
+if ($user['admin'] == 1) {
     header('location: /admin');
 }
 
@@ -25,8 +25,8 @@ if ($result->num_rows > 0) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //   $username = $_POST['username'];
-    $fullname = $_POST['fullname'];
-    $bio = $_POST['bio'];
+    $fullname = mysqli_real_escape_string($db,$_POST['fullname']);
+    $bio = mysqli_real_escape_string($db, $_POST['bio']);
     $private = 0;
     if (isset($_POST['account'])) {
         $private = 1;
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unlink($target_dir);
         }
         move_uploaded_file($image_tmp_name, $target_dir);
-        $sql = "UPDATE user_data SET profile_link = '/assets/image/profile/$username.$ext', fullname = '$fullname', bio = '$bio', private= '$private' WHERE user_id = $user_id";
+        $sql = "UPDATE user_data SET profile_link = '/assets/image/profile/$username.$ext', fullname = '$fullname', bio = '$bio ', private= '$private' WHERE user_id = $user_id";
     } else {
         $sql = "UPDATE user_data SET fullname = '$fullname', bio = '$bio', private= '$private' WHERE user_id = $user_id";
 
@@ -109,8 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="checkbox" id="account" name="account" value="true">
                 <input type="submit" value="Save">
                 <button type="button" class="up-btn">Update Interests</button>
-                <?php if($user['verified']!=1) 
-                echo '<button type="button" class="req-btn">Request Verification</button>';
+                <?php if ($user['verified'] != 1)
+                    echo '<button type="button" class="req-btn">Request Verification</button>';
                 ?>
                 <button type="button" class="logout">Logout</button>
             </form>

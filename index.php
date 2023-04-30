@@ -58,6 +58,8 @@ foreach ($user_array as $user_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hive</title>
     <link rel="stylesheet" href="./assets/css/home.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -123,7 +125,7 @@ foreach ($user_array as $user_id) {
 
                     $badge = '';
                     if ($row['verified'] == 1) {
-                        $badge = ' <i class="fa-solid fa-certificate" style="color: rgb(0, 85, 165); font-size:medium;"></i>';
+                        $badge = '<span class="material-symbols-outlined">new_releases</span>';
                     }
                     if ($row['post_img'] == NULL) {
                         echo '<div class="post_container">
@@ -218,7 +220,7 @@ foreach ($user_array as $user_id) {
                     foreach ($users as $user) {
                         $badge = '';
                         if ($user['verified'] == 1) {
-                            $badge = ' <i class="fa-solid fa-certificate" style="color: rgb(0, 85, 165);"></i>';
+                            $badge = '<span class="material-symbols-outlined small">new_releases</span>';
                         }
 
                         echo '<div class="suggestion">
