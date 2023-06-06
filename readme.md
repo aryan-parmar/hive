@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, welcome to Hive</h1>
 
 <p align="center">
-  <img src="../hive/favicon.ico" />
+  <img src="./favicon.ico" />
 </p>
 
 <p align="center">
